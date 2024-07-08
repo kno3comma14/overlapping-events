@@ -1,5 +1,6 @@
 (ns overlappingevents.event-validator)
 
+
 (defn validate-event-fields
   "Throws IllegalArgumentException if event is invalid"
   [event]

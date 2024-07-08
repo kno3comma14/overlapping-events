@@ -1,4 +1,4 @@
-{
+{:paths ["src" "resources" "test"]
  :aliases
  {:test {:main-opts ["-m" "kaocha.runner"]
          :exec-fn kaocha.runner/exec-fn

@@ -2,7 +2,8 @@
   (:require [clojure.test :refer [deftest is testing]]
             [overlappingevents.time-overlapping :refer [find-overlaps 
                                                         overlap?  
-                                                        create_event]]))
+                                                        create_event
+                                                        parse-event]]))
 
 
 (def events
@@ -31,6 +32,12 @@
 
 (deftest find-overlaps-test
   (testing "Returns set of overlapping events"
-    (let [expected-result #{#{1 2} #{3 2}}
+    (let [expected-result (seq #{#{1 2} #{3 2}})
           result (find-overlaps events)]
+      (is (= expected-result result)))))
+
+(deftest parse-event-test
+  (testing "Returns an Event record"
+    (let [expected-result (create_event 1 "2023-01-01 18:36:34" "2023-01-05 18:36:34")
+          result (parse-event "1,2023-01-01 18:36:34,2023-01-05 18:36:34")]
       (is (= expected-result result)))))

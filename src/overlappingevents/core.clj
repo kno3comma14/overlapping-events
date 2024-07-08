@@ -1,6 +1,13 @@
-(ns overlappingevents.core)
+(ns overlappingevents.core
+  (:require [overlappingevents.event-io :as ev-io]
+            [overlappingevents.time-overlapping :refer [find-overlaps
+                                                        parse-event]]))
+
 
 (defn -main
-  "I don't do a whole lot ... yet."
+  "Entry point for the program"
   [& args]
-  (println "Hello, World!"))
+  (let [file-name (first args)
+        events (ev-io/read-resource-file-by-line file-name parse-event)
+        overlaps (find-overlaps events)]
+    (println overlaps)))
