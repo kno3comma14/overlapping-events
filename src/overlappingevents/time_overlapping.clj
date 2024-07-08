@@ -1,10 +1,23 @@
 (ns overlappingevents.time-overlapping
+  (:require [overlappingevents.event-validator :as ev])
   (:import
-   (java.time.format DateTimeFormatter)))
+   (java.time.format DateTimeFormatter)
+   (java.time LocalDateTime)))
+
+
+(def formatter (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss"))
 
 (defrecord Event [id start-date end-date])
 
-(def formatter (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss"))
+(defn create_event
+  "Returns an Event record"
+  [id start-date end-date] 
+  (let [evt (->Event id
+                     (LocalDateTime/parse start-date formatter)
+                     (LocalDateTime/parse end-date formatter))]
+    (ev/validate-event-fields evt)
+    (ev/validate-event-range evt)
+    evt))
 
 (defn overlap? 
   "Returns true if events overlap"

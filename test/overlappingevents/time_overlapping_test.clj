@@ -1,24 +1,21 @@
 (ns overlappingevents.time-overlapping-test
   (:require [clojure.test :refer [deftest is testing]]
             [overlappingevents.time-overlapping :refer [find-overlaps 
-                                                        overlap? 
-                                                        formatter 
-                                                        ->Event]])
-  (:import (java.time LocalDateTime)))
+                                                        overlap?  
+                                                        create_event]]))
+
 
 (def events
-  [(->Event 1 (LocalDateTime/parse "2023-01-01 18:36:34" formatter) (LocalDateTime/parse "2023-01-05 18:36:34" formatter))
-   (->Event 2 (LocalDateTime/parse "2023-01-03 18:36:34" formatter) (LocalDateTime/parse "2023-01-07 18:36:34" formatter))
-   (->Event 3 (LocalDateTime/parse "2023-01-06 18:36:34" formatter) (LocalDateTime/parse "2023-01-10 18:36:34" formatter))
-   (->Event 4 (LocalDateTime/parse "2023-01-11 18:36:34" formatter) (LocalDateTime/parse "2023-01-15 18:36:34" formatter))])
+  [(create_event 1 "2023-01-01 18:36:34" "2023-01-05 18:36:34")
+   (create_event 2 "2023-01-03 18:36:34" "2023-01-07 18:36:34")
+   (create_event 3 "2023-01-06 18:36:34" "2023-01-10 18:36:34")
+   (create_event 4 "2023-01-11 18:36:34" "2023-01-15 18:36:34")])
 
 (def event-use-cases
-  {:not-overlapping [(->Event 1 (LocalDateTime/parse "2023-01-01 18:36:34" formatter) (LocalDateTime/parse "2023-02-01 18:36:34" formatter))
-                     (->Event 2 (LocalDateTime/parse "2023-02-03 18:36:34" formatter) (LocalDateTime/parse "2023-03-12 18:36:34" formatter))]
-   :overlapping [(->Event 1 (LocalDateTime/parse "2023-01-01 18:36:34" formatter) (LocalDateTime/parse "2023-02-01 18:36:34" formatter))
-                 (->Event 2 (LocalDateTime/parse "2022-12-03 18:36:34" formatter) (LocalDateTime/parse "2023-01-02 18:36:34" formatter))]})
-
-
+  {:not-overlapping [(create_event 1 "2023-01-01 18:36:34" "2023-02-01 18:36:34")
+                     (create_event 2 "2023-02-03 18:36:34" "2023-03-12 18:36:34")]
+   :overlapping [(create_event 1 "2023-01-01 18:36:34" "2023-02-01 18:36:34")
+                 (create_event 2 "2022-12-03 18:36:34" "2023-01-02 18:36:34")]})
 
 (deftest overlap?-test
   (testing "Returns false when events do not overlap"

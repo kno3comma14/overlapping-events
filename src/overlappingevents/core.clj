@@ -1,8 +1,4 @@
-(ns overlappingevents.core
-  (:require [overlappingevents.time-overlapping :refer [find-overlaps 
-                                                        formatter 
-                                                        ->Event]])
-  (:import (java.time LocalDateTime)))
+(ns overlappingevents.core)
 
 (defn -main
   "I don't do a whole lot ... yet."
