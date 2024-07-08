@@ -1,0 +1,6 @@
+{
+ :aliases
+ {:test {:main-opts ["-m" "kaocha.runner"]
+         :exec-fn kaocha.runner/exec-fn
+         :extra-deps {lambdaisland/kaocha {:mvn/version "1.91.1392"}}}}
+}
